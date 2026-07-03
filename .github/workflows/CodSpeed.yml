@@ -15,6 +15,9 @@ jobs:
   bench:
     name: Run benchmarks
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -57,7 +60,7 @@ jobs:
           uv run buildtools/build_extensions.py --build_type debugoptimized --clean
       - name: Run benchmarks
         # We evaluate the microbenchmarks using the release build.
-        uses: CodSpeedHQ/action@76578c2a7ddd928664caa737f0e962e3085d4e7c # v3.8.1
+        uses: CodSpeedHQ/action@24ed6f45146d7b532531a8c0c2a5ef3d6a453e7a # v4.18.1
         with:
-          token: ${{ secrets.CODSPEED_TOKEN }}
+          mode: simulation
           run: uv run pytest benchmarks/ --codspeed
